@@ -10,6 +10,8 @@ Description: A set of functions designed to estimate the prevalence of
     polygenic risk. The functions are obtained from:
     https://doi.org/10.1101/2021.04.11.439.
 License: MIT + file LICENSE
+URL: https://github.com/mglev1n/prssim, https://mglev1n.github.io/prssim/
+BugReports: https://github.com/mglev1n/prssim/issues
 Imports: 
     checkmate
 Suggests: 
@@ -21,6 +23,3 @@ VignetteBuilder:
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
-URL: https://github.com/mglev1n/prssim,
-    https://mglev1n.github.io/prssim/
-BugReports: https://github.com/mglev1n/prssim/issues

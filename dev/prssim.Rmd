@@ -43,7 +43,7 @@ usethis::use_mit_license("Michael Levin")
 
 # Estimate Prevalence of Elevated PRS Among First-Degree Relatives
 
-This function allows us to estimate the prevalence of elevated PRS among first-degree relatives of probands.
+This function enables the user to estimate the prevalence of elevated polygenic risk among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution).
 
 <!-- 
 This first section shows:
@@ -54,7 +54,9 @@ This first section shows:
 -->
 
 ```{r function-sib_risk}
-#' Estimate sibling risk
+#' Estimate Prevalence of Elevated Polygenic Risk Among First-Degree Relatives
+#' 
+#' This function enables the user to estimate the prevalence of elevated polygenic risk among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution).
 #'
 #' @param q (numeric; range = 0 to 1) Top quantile of risk used to define "elevated" risk in the proband. For example, if interested in the top 1% of risk, q = 0.01.
 #'
@@ -64,7 +66,7 @@ This first section shows:
 #'
 risk_sib_high_prs <- function(q) {
   
-  checkmate::assert_numeric(q, lower = 0, upper = 1)
+  checkmate::assert_number(q, lower = 0, upper = 1)
   
   integrand <- function(t) {
     return(dnorm(t) * pnorm(qnorm(1 - q) * sqrt(2) - t, lower.tail = F)^2 / q)
@@ -96,6 +98,52 @@ test_that("risk_sib_high_prs works", {
 })
 ```
 
+
+# Estimate Prevalence of Disease Among First-Degree Relatives
+
+This function enables the user to estimate the prevalence of disease among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r`.
+
+```{r function-risk_sib_affected}
+#' Estimate Prevalence of Disease Among First-Degree Relatives
+#' 
+#' This function enables the user to estimate the prevalence of disease among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r`.
+#' 
+#' @param q (numeric; range = 0 to 1) Top quantile of risk used to define "elevated" risk in the proband. For example, if interested in the top 1% of risk, q = 0.01.
+#' @param K (numeric; range = 0 to 1) Population prevalence of disease 
+#' @param r (numeric; range = 0 to 1) Proportion of variability explained by the PRS (r^2^)
+#'
+#' @return (numeric) Prevalence of disease among relatives
+#' 
+#' @export
+
+
+risk_sib_affected <- function(q,K,r) {
+  checkmate::assert_number(q, lower = 0, upper = 1)
+  checkmate::assert_number(K, lower = 0, upper = 1)
+  checkmate::assert_number(r, lower = 0, upper = 1)
+  
+ zq <- qnorm(1-q)
+ zK <- qnorm(1-K)
+ integrand = function(t) {
+ arg1 <- zq*sqrt(2)-t
+ arg2 <- (zK-t*r/sqrt(2)) / (sqrt(1-r^2/2))
+ return(dnorm(t)*pnorm(arg1,lower.tail=F)*pnorm(arg2,lower.tail=F) / q)
+ }
+ return(integrate(integrand,-Inf,Inf)$value)
+}
+```
+  
+```{r example-risk_sib_affected}
+risk_sib_affected(0.01, 0.05, 0.1)
+```
+  
+```{r tests-risk_sib_affected}
+test_that("risk_sib_affected works", {
+  expect_type(risk_sib_affected(0.01, 0.05, 0.1), "double")
+  expect_error(risk_sib_affected("a", "b", "c"))
+})
+```
+  
 
 <!-- 
 # Inflate your package

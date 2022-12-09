@@ -2,7 +2,7 @@
 % Please edit documentation in R/risk_sib_high_prs.R
 \name{risk_sib_high_prs}
 \alias{risk_sib_high_prs}
-\title{Estimate sibling risk}
+\title{Estimate Prevalence of Elevated Polygenic Risk Among First-Degree Relatives}
 \usage{
 risk_sib_high_prs(q)
 }
@@ -13,7 +13,7 @@ risk_sib_high_prs(q)
 (numeric) Prevalence of elevated polygenic risk among first-degree relatives
 }
 \description{
-Estimate sibling risk
+This function enables the user to estimate the prevalence of elevated polygenic risk among first-degree relatives of probands with elevated polygenic risk (within the top \code{q} of the PRS distribution).
 }
 \examples{
 risk_sib_high_prs(q = .25)

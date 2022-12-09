@@ -40,7 +40,7 @@ Note: when you will use other flat templates, this part will be in a separate fi
 
 # Estimate Prevalence of Elevated PRS Among First-Degree Relatives
 
-This function allows us to estimate the prevalence of elevated PRS among first-degree relatives of probands.
+This function enables the user to estimate the prevalence of elevated polygenic risk among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution).
 
 <!-- 
 This first section shows:
@@ -66,6 +66,18 @@ risk_sib_high_prs(q = .25)
 Here are some unit tests to verify the function works as expected.
 -->
 
+
+# Estimate Prevalence of Disease Among First-Degree Relatives
+
+This function enables the user to estimate the prevalence of disease among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r`.
+
+```{r example-risk_sib_affected}
+risk_sib_affected(0.01, 0.05, 0.1)
+```
+
+  
+
+  
 
 <!-- 
 
