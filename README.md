@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/mglev1n/prssim/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mglev1n/prssim/actions/workflows/R-CMD-check.yaml)
-[![check-coverage](https://github.com/mglev1n/prssim/actions/workflows/check-coverage.yaml/badge.svg)](https://github.com/mglev1n/prssim/actions/workflows/check-coverage.yaml)
+[![check-coverage](https://github.com/mglev1n/prssim/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/mglev1n/prssim/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
 The goal of prssim is to provide a set of functions to estimate
