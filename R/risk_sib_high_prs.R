@@ -11,7 +11,7 @@
 #'
 #'
 #' @examples
-#' risk_sib_high_prs(q = 0.1)
+#' risk_sib_high_prs(q = 0.25)
 risk_sib_high_prs <- function(q) {
   checkmate::assert_number(q, lower = 0, upper = 1)
 

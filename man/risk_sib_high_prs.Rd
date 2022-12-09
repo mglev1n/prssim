@@ -16,5 +16,5 @@ risk_sib_high_prs(q)
 This function enables the user to estimate the prevalence of elevated polygenic risk among first-degree relatives of probands with elevated polygenic risk (within the top \code{q} of the PRS distribution).
 }
 \examples{
-risk_sib_high_prs(q = 0.1)
+risk_sib_high_prs(q = 0.25)
 }
