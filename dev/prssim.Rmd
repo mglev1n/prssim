@@ -1,0 +1,118 @@
+---
+title: "PRS sim"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- 
+Run this 'development' chunk
+
+Store every call to library() that you need to run chunks line by line, as in a classical Rmd for analysis
+-->
+
+```{r development, include=FALSE}
+library(testthat)
+library(devtools)
+```
+
+<!--
+# Description of your package
+
+This will fill the description of your package.
+Fill and run the content of this chunk, before anything else. 
+
+Note: when you will use other flat templates, this part will be in a separate file. Do not be surprised!
+--> 
+
+```{r description, eval=FALSE}
+# Describe your package
+fusen::fill_description(
+  pkg = here::here(),
+  fields = list(
+    Title = "Estimate Prevalence of Elevated PRS",
+    Description = "A set of functions designed to estimate the prevalence of elevated polygenic risk among relatives of probands, and estimate the prevalence of disease among relatives of probands with elevated polygenic risk. The functions are obtained from: https://doi.org/10.1101/2021.04.11.439",
+    `Authors@R` = c(
+      person("Michael", "Levin", email = "michael.levin@pennmedicine.upenn.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9937-9932"))
+    )
+  )
+)
+# Define License with use_*_license()
+usethis::use_mit_license("Michael Levin")
+```
+
+# Estimate Prevalence of Elevated PRS Among First-Degree Relatives
+
+This function allows us to estimate the prevalence of elevated PRS among first-degree relatives of probands.
+
+<!-- 
+This first section shows:
+
+- the three parts necessary for a package: 'function', 'examples' and 'tests'.  
+  + Note that the three following chunks have names accordingly.
+
+-->
+
+```{r function-sib_risk}
+#' Estimate sibling risk
+#'
+#' @param q (numeric; range = 0 to 1) Top quantile of risk used to define "elevated" risk in the proband. For example, if interested in the top 1% of risk, q = 0.01.
+#'
+#' @return (numeric) Prevalence of elevated polygenic risk among first-degree relatives
+#' @export
+#'
+#'
+risk_sib_high_prs <- function(q) {
+  
+  checkmate::assert_numeric(q, lower = 0, upper = 1)
+  
+  integrand <- function(t) {
+    return(dnorm(t) * pnorm(qnorm(1 - q) * sqrt(2) - t, lower.tail = F)^2 / q)
+  }
+  return(integrate(integrand, -Inf, Inf)$value)
+}
+
+```
+
+<!--
+Here is an example on how to use the function.
+This should be a reproducible and working example
+-->
+
+Here, we define elevated risk in probands as the top 25% of the PRS distribution. We can calculate the prevalence of elevated risk in first-degree relatives:
+```{r examples-sib_risk}
+risk_sib_high_prs(q = .25)
+```
+
+<!--
+Here are some unit tests to verify the function works as expected.
+-->
+
+```{r tests-sib_risk}
+test_that("risk_sib_high_prs works", {
+  expect_type(risk_sib_high_prs(0.25), "double")
+  expect_error(risk_sib_high_prs(2))
+  expect_error(risk_sib_high_prs(q = "a"))
+})
+```
+
+
+<!-- 
+# Inflate your package
+
+You're one inflate from paper to box.
+Build your package from this very Rmd using `fusen::inflate()` 
+-->
+
+
+```{r development-inflate, eval=FALSE}
+# Execute in the console directly
+fusen::inflate(flat_file = "dev/prssim.Rmd")
+```
+
+<!-- 
+- Verify your `"DESCRIPTION"` file has been updated
+- Verify your function is in `"R/"` directory
+- Verify your test is in `"tests/testthat/"` directory
+- Verify this Rmd appears in `"vignettes/"` directory 
+-->
