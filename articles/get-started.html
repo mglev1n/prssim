@@ -117,8 +117,8 @@ This should be a reproducible and working example
 distribution. We can calculate the prevalence of elevated risk in
 first-degree relatives:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_sib_high_prs.html">risk_sib_high_prs</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.4811004</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_sib_high_prs.html">risk_sib_high_prs</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.3240152</span></span></code></pre></div>
 <!--
 Here are some unit tests to verify the function works as expected.
 -->
@@ -134,6 +134,26 @@ variability (r<sup>2</sup>) explained by the PRS <code>r</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_sib_affected.html">risk_sib_affected</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.06510161</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="estimate-prevalence-of-elevated-prs-among-relatives-of-d-degree">Estimate Prevalence of Elevated PRS Among Relatives of d-degree<a class="anchor" aria-label="anchor" href="#estimate-prevalence-of-elevated-prs-among-relatives-of-d-degree"></a>
+</h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_rel_high_prs.html">risk_rel_high_prs</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">0.1</span>, d <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.3240152</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="estimate-prevalence-of-disease-among-d-degree-relatives">Estimate Prevalence of Disease Among d-Degree Relatives<a class="anchor" aria-label="anchor" href="#estimate-prevalence-of-disease-among-d-degree-relatives"></a>
+</h2>
+<p>This function enables the user to estimate the prevalence of disease
+among <code>d</code>-degree relatives of probands with elevated
+polygenic risk (within the top <code>q</code> of the PRS distribution),
+based on a disease with population prevalence <code>K</code>, and
+proportion of variability (r<sup>2</sup>) explained by the PRS
+<code>r2</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_rel_affected.html">risk_rel_affected</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">0.25</span>, d <span class="op">=</span> <span class="fl">1</span>, r2 <span class="op">=</span> <span class="fl">0.02</span>, K <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.05962645</span></span></code></pre></div>
 <!-- 
 
 # Inflate your package
