@@ -59,7 +59,7 @@ This should be a reproducible and working example
 Here, we define elevated risk in probands as the top 25% of the PRS distribution. We can calculate the prevalence of elevated risk in first-degree relatives:
 
 ```{r examples-sib_risk}
-risk_sib_high_prs(q = .25)
+risk_sib_high_prs(q = 0.1)
 ```
 
 <!--
@@ -71,8 +71,41 @@ Here are some unit tests to verify the function works as expected.
 
 This function enables the user to estimate the prevalence of disease among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r`.
 
+
+  
+
 ```{r example-risk_sib_affected}
 risk_sib_affected(0.01, 0.05, 0.1)
+```
+
+  
+
+  
+
+
+# Estimate Prevalence of Elevated PRS Among Relatives of d-degree
+
+    
+
+  
+
+```{r example-risk_rel_high_prs}
+risk_rel_high_prs(q = 0.1, d = 1)
+```
+
+  
+
+  
+
+# Estimate Prevalence of Disease Among d-Degree Relatives
+
+This function enables the user to estimate the prevalence of disease among `d`-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r2`.
+    
+
+  
+
+```{r example-risk_rel_affected}
+risk_rel_affected(q = 0.25, d = 1, r2 = 0.02, K = 0.05)
 ```
 
   

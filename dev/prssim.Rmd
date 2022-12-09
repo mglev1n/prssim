@@ -55,7 +55,7 @@ This first section shows:
 
 ```{r function-sib_risk}
 #' Estimate Prevalence of Elevated Polygenic Risk Among First-Degree Relatives
-#' 
+#'
 #' This function enables the user to estimate the prevalence of elevated polygenic risk among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution).
 #'
 #' @param q (numeric; range = 0 to 1) Top quantile of risk used to define "elevated" risk in the proband. For example, if interested in the top 1% of risk, q = 0.01.
@@ -65,15 +65,13 @@ This first section shows:
 #'
 #'
 risk_sib_high_prs <- function(q) {
-  
   checkmate::assert_number(q, lower = 0, upper = 1)
-  
+
   integrand <- function(t) {
     return(dnorm(t) * pnorm(qnorm(1 - q) * sqrt(2) - t, lower.tail = F)^2 / q)
   }
   return(integrate(integrand, -Inf, Inf)$value)
 }
-
 ```
 
 <!--
@@ -83,7 +81,7 @@ This should be a reproducible and working example
 
 Here, we define elevated risk in probands as the top 25% of the PRS distribution. We can calculate the prevalence of elevated risk in first-degree relatives:
 ```{r examples-sib_risk}
-risk_sib_high_prs(q = .25)
+risk_sib_high_prs(q = 0.1)
 ```
 
 <!--
@@ -105,31 +103,31 @@ This function enables the user to estimate the prevalence of disease among first
 
 ```{r function-risk_sib_affected}
 #' Estimate Prevalence of Disease Among First-Degree Relatives
-#' 
+#'
 #' This function enables the user to estimate the prevalence of disease among first-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r`.
-#' 
+#'
 #' @param q (numeric; range = 0 to 1) Top quantile of risk used to define "elevated" risk in the proband. For example, if interested in the top 1% of risk, q = 0.01.
-#' @param K (numeric; range = 0 to 1) Population prevalence of disease 
+#' @param K (numeric; range = 0 to 1) Population prevalence of disease
 #' @param r (numeric; range = 0 to 1) Proportion of variability explained by the PRS (r^2^)
 #'
 #' @return (numeric) Prevalence of disease among relatives
-#' 
+#'
 #' @export
 
 
-risk_sib_affected <- function(q,K,r) {
+risk_sib_affected <- function(q, K, r) {
   checkmate::assert_number(q, lower = 0, upper = 1)
   checkmate::assert_number(K, lower = 0, upper = 1)
   checkmate::assert_number(r, lower = 0, upper = 1)
-  
- zq <- qnorm(1-q)
- zK <- qnorm(1-K)
- integrand = function(t) {
- arg1 <- zq*sqrt(2)-t
- arg2 <- (zK-t*r/sqrt(2)) / (sqrt(1-r^2/2))
- return(dnorm(t)*pnorm(arg1,lower.tail=F)*pnorm(arg2,lower.tail=F) / q)
- }
- return(integrate(integrand,-Inf,Inf)$value)
+
+  zq <- qnorm(1 - q)
+  zK <- qnorm(1 - K)
+  integrand <- function(t) {
+    arg1 <- zq * sqrt(2) - t
+    arg2 <- (zK - t * r / sqrt(2)) / (sqrt(1 - r^2 / 2))
+    return(dnorm(t) * pnorm(arg1, lower.tail = F) * pnorm(arg2, lower.tail = F) / q)
+  }
+  return(integrate(integrand, -Inf, Inf)$value)
 }
 ```
   
@@ -141,6 +139,104 @@ risk_sib_affected(0.01, 0.05, 0.1)
 test_that("risk_sib_affected works", {
   expect_type(risk_sib_affected(0.01, 0.05, 0.1), "double")
   expect_error(risk_sib_affected("a", "b", "c"))
+})
+```
+  
+
+# Estimate Prevalence of Elevated PRS Among Relatives of d-degree
+    
+```{r function-risk_rel_high_prs}
+#' Estimate Prevalence of Elevated PRS Among Relatives of d-degree
+#'
+#' This function enables the user to estimate the prevalence of elevated polygenic risk among `d`-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution).
+#'
+#' @param q (numeric; range = 0 to 1) Top quantile of risk used to define "elevated" risk in the proband. For example, if interested in the top 1% of risk, q = 0.01.
+#' @param d (integer) Degree of relationship to relatives
+#'
+#' @return (numeric) Prevalence of elevated polygenic risk (top `q` of the PRS distribution) among relatives of `d`-degree
+#'
+#' @export
+
+risk_rel_high_prs <- function(q, d) {
+  checkmate::assert_number(q, lower = 0, upper = 1)
+  checkmate::assert_number(d, lower = 0)
+  zq <- qnorm(1 - q)
+  e <- 2^d
+  integrand <- function(t) {
+    return(dnorm(t) * pnorm((2^d * zq - t) / sqrt(2^(2 * d) - 1), lower.tail = F) / q)
+  }
+  return(integrate(integrand, zq, Inf)$value)
+}
+```
+  
+```{r example-risk_rel_high_prs}
+risk_rel_high_prs(q = 0.1, d = 1)
+```
+  
+```{r tests-risk_rel_high_prs}
+test_that("risk_rel_high_prs works", {
+  expect_type(risk_rel_high_prs(q = 0.1, d = 2), "double")
+  expect_error(risk_rel_high_prs(q = 0.1, d = -1))
+  expect_error(risk_rel_high_prs(q = -1, d = 0))
+})
+```
+  
+# Estimate Prevalence of Disease Among d-Degree Relatives
+
+This function enables the user to estimate the prevalence of disease among `d`-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r2`.
+    
+```{r function-risk_rel_affected}
+#' Estimate Prevalence of Disease Among d-Degree Relatives
+#'
+#' This function enables the user to estimate the prevalence of disease among `d`-degree relatives of probands with elevated polygenic risk (within the top `q` of the PRS distribution), based on a disease with population prevalence `K`, and proportion of variability (r^2^) explained by the PRS `r2`.
+#'
+#' @param q (numeric; range = 0 to 1) Top quantile of risk used to define "elevated" risk in the proband. For example, if interested in the top 1% of risk, q = 0.01.
+#' @param K (numeric; range = 0 to 1) Population prevalence of disease
+#' @param r2 (numeric; range = 0 to 1) Proportion of variability explained by the PRS (r^2^)
+#' @param d (integer) Degree of relationship to relatives
+#'
+#' @return
+#'
+#' @export
+
+
+risk_rel_affected <- function(q, K, r2, d) {
+  checkmate::assert_number(q, lower = 0, upper = 1)
+  checkmate::assert_number(K, lower = 0, upper = 1)
+  checkmate::assert_number(r2, lower = 0, upper = 1)
+  checkmate::assert_numeric(d, lower = 0)
+
+  r <- sqrt(r2)
+  zq <- qnorm(1 - q)
+  zK <- qnorm(1 - K)
+  integrand_inner <- function(tp, t) {
+    arg1 <- (zK - r * sqrt(1 - 2^(-2 * d)) * tp) / sqrt(1 - r^2)
+    arg2 <- tp - t / sqrt(2^(2 * d) - 1)
+    return(pnorm(arg1, lower.tail = F) * dnorm(arg2))
+  }
+  integrand_outer <- function(ts) {
+    y <- numeric(length(ts))
+    for (i in seq_along(ts))
+    {
+      t <- ts[i]
+      inner <- integrate(integrand_inner, -Inf, Inf, t)$value
+      y[i] <- dnorm(t) * inner / q
+    }
+    return(y)
+  }
+  return(integrate(integrand_outer, zq, Inf)$value)
+}
+```
+  
+```{r example-risk_rel_affected}
+risk_rel_affected(q = 0.25, d = 1, r2 = 0.02, K = 0.05)
+```
+  
+```{r tests-risk_rel_affected}
+test_that("risk_rel_affected works", {
+  expect_type(risk_rel_affected(q = 0.25, d = 1, r2 = 0.02, K = 0.05), "double")
+  expect_error(risk_rel_affected(q = 0.25, d = 1, r2 = 0.02, K = -0.05))
+  expect_error(risk_rel_affected(q = 10.25, d = 1, r2 = 0.02, K = 0.05))
 })
 ```
   
