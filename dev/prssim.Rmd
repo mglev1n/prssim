@@ -131,8 +131,11 @@ risk_sib_affected <- function(q, K, r) {
 }
 ```
   
+  
+Here, we estimate disease prevalance among first-degree relatives of a proband in the top 1% of a PRS distribution, with an r^2^ of the PRS of 0.1 and disease prevalence of 5%.
+
 ```{r example-risk_sib_affected}
-risk_sib_affected(0.01, 0.05, 0.1)
+risk_sib_affected(q = 0.01, K = 0.05, r = 0.1)
 ```
   
 ```{r tests-risk_sib_affected}

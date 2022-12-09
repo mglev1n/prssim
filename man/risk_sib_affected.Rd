@@ -20,5 +20,5 @@ risk_sib_affected(q, K, r)
 This function enables the user to estimate the prevalence of disease among first-degree relatives of probands with elevated polygenic risk (within the top \code{q} of the PRS distribution), based on a disease with population prevalence \code{K}, and proportion of variability (r^2^) explained by the PRS \code{r}.
 }
 \examples{
-risk_sib_affected(0.01, 0.05, 0.1)
+risk_sib_affected(q = 0.01, K = 0.05, r = 0.1)
 }

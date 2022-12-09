@@ -14,7 +14,7 @@
 
 
 #' @examples
-#' risk_sib_affected(0.01, 0.05, 0.1)
+#' risk_sib_affected(q = 0.01, K = 0.05, r = 0.1)
 risk_sib_affected <- function(q, K, r) {
   checkmate::assert_number(q, lower = 0, upper = 1)
   checkmate::assert_number(K, lower = 0, upper = 1)
