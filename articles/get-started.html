@@ -98,8 +98,10 @@ Note: when you will use other flat templates, this part will be in a separate fi
 <h2 id="estimate-prevalence-of-elevated-prs-among-first-degree-relatives">Estimate Prevalence of Elevated PRS Among First-Degree
 Relatives<a class="anchor" aria-label="anchor" href="#estimate-prevalence-of-elevated-prs-among-first-degree-relatives"></a>
 </h2>
-<p>This function allows us to estimate the prevalence of elevated PRS
-among first-degree relatives of probands.</p>
+<p>This function enables the user to estimate the prevalence of elevated
+polygenic risk among first-degree relatives of probands with elevated
+polygenic risk (within the top <code>q</code> of the PRS
+distribution).</p>
 <!-- 
 This first section shows:
 
@@ -120,6 +122,18 @@ first-degree relatives:</p>
 <!--
 Here are some unit tests to verify the function works as expected.
 -->
+</div>
+<div class="section level2">
+<h2 id="estimate-prevalence-of-disease-among-first-degree-relatives">Estimate Prevalence of Disease Among First-Degree Relatives<a class="anchor" aria-label="anchor" href="#estimate-prevalence-of-disease-among-first-degree-relatives"></a>
+</h2>
+<p>This function enables the user to estimate the prevalence of disease
+among first-degree relatives of probands with elevated polygenic risk
+(within the top <code>q</code> of the PRS distribution), based on a
+disease with population prevalence <code>K</code>, and proportion of
+variability (r<sup>2</sup>) explained by the PRS <code>r</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_sib_affected.html">risk_sib_affected</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.06510161</span></span></code></pre></div>
 <!-- 
 
 # Inflate your package
@@ -134,7 +148,8 @@ Build your package from this very Rmd using `fusen::inflate()`
 - Verify this Rmd appears in `"vignettes/"` directory 
 -->
 </div>
-  </main>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
