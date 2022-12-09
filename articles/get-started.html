@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">prssim</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,8 +117,8 @@ This should be a reproducible and working example
 distribution. We can calculate the prevalence of elevated risk in
 first-degree relatives:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_sib_high_prs.html">risk_sib_high_prs</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.3240152</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_sib_high_prs.html">risk_sib_high_prs</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.4811004</span></span></code></pre></div>
 <!--
 Here are some unit tests to verify the function works as expected.
 -->
@@ -138,6 +138,12 @@ variability (r<sup>2</sup>) explained by the PRS <code>r</code>.</p>
 <div class="section level2">
 <h2 id="estimate-prevalence-of-elevated-prs-among-relatives-of-d-degree">Estimate Prevalence of Elevated PRS Among Relatives of d-degree<a class="anchor" aria-label="anchor" href="#estimate-prevalence-of-elevated-prs-among-relatives-of-d-degree"></a>
 </h2>
+<p>This function enables the user to estimate the prevalence of elevated
+polygenic risk among <code>d</code>-degree relatives of probands with
+elevated polygenic risk (within the top <code>q</code> of the PRS
+distribution).</p>
+<p>Here, we estimate the prevalence of elevated PRS among first-degree
+relatives of probands in the top 10% of the PRS distribution:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_rel_high_prs.html">risk_rel_high_prs</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">0.1</span>, d <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.3240152</span></span></code></pre></div>
@@ -151,6 +157,9 @@ polygenic risk (within the top <code>q</code> of the PRS distribution),
 based on a disease with population prevalence <code>K</code>, and
 proportion of variability (r<sup>2</sup>) explained by the PRS
 <code>r2</code>.</p>
+<p>Here, we estimate the prevalence of diseaes among first-degree
+relatives of probands in the top 25% of a PRS distribution, with a
+disease prevalence of 5% and r<sup>2</sup> of the PRS of 0.02:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/risk_rel_affected.html">risk_rel_affected</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">0.25</span>, d <span class="op">=</span> <span class="fl">1</span>, r2 <span class="op">=</span> <span class="fl">0.02</span>, K <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.05962645</span></span></code></pre></div>
